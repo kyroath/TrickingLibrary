@@ -17,11 +17,14 @@ namespace TrickingLibrary.Api
         {
             services.AddControllers();
 
+            services.AddSingleton<TrickyStore>();
+            
             services.AddCors(options => options
                 .AddPolicy(AllCors, build => build
                     .AllowAnyOrigin()
                     .AllowAnyOrigin()
-                    .AllowAnyMethod()));
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
