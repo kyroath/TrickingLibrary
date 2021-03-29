@@ -1,5 +1,7 @@
 <template>
   <div>
+    <v-file-input accept="video/*" @change="handleFile"></v-file-input>
+
     <div v-if="tricks">
       <p v-for="t in tricks">
         {{ t.name }}
@@ -19,6 +21,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
   data: () => ({
@@ -44,6 +47,15 @@ export default {
         },
       });
       this.trickName = "";
+    },
+    async handleFile(file) {
+      if (!file) return;
+
+      const form = new FormData();
+      form.append("video", file);
+
+      const result = await axios.post("http://localhost:5000/api/videos", form);
+      console.log("Upload result: ", result);
     },
   },
 };
